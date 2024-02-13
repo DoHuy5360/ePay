@@ -8,6 +8,41 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Image.asset("images/login-bg-curve.png"),
+                const Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: IconTheme(
+                        data: IconThemeData(size: 80, color: Colors.white),
+                        child: Icon(Icons.account_balance_outlined)),
+                  ),
+                ),
+              ],
+            ),
+            const Credentials()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Credentials extends StatefulWidget {
+  const Credentials({super.key});
+
+  @override
+  State<Credentials> createState() => _CredentialsState();
+}
+
+class _CredentialsState extends State<Credentials> {
   Future<bool> verifyCredentials() async {
     print('Verifying credentials');
     try {
@@ -23,9 +58,8 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Center(
-          child: Column(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
@@ -56,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
               },
               child: const Text("Login"))
         ],
-      )),
+      ),
     );
   }
 }

@@ -21,11 +21,10 @@ Future<String> fetchData() async {
 void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/home',
+    initialRoute: '/login',
     routes: {
       '/loading': (context) => const LoadingView(),
-      '/login': (context) =>
-          const HeadLayout(title: "Login", view: LoginView()),
+      '/login': (context) => const LoginView(),
       '/home': (context) => const MainLayout(),
     },
   ));
