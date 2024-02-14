@@ -60,9 +60,9 @@ class _MainLayoutState extends State<MainLayout> {
             showSelectedLabels: false,
             showUnselectedLabels: false,
             unselectedItemColor: Colors.black,
-            selectedItemColor: Colors.blue,
+            selectedItemColor: Theme.of(context).colorScheme.secondary,
             currentIndex: currentViewIndex,
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             onTap: (int index) {
               bottomRoutes[index].action();
             },

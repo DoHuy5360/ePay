@@ -34,8 +34,9 @@ class HeadBar extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: Color.fromARGB(255, 213, 213, 213)),
             child: IconTheme(
-                data: IconThemeData(size: 35, color: Colors.blue),
-                child: Icon(Icons.person)),
+                data: IconThemeData(
+                    size: 35, color: Theme.of(context).colorScheme.secondary),
+                child: const Icon(Icons.person)),
           ),
           const InkWell(
             child: IconTheme(
@@ -57,7 +58,8 @@ class Balance extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-            color: Colors.blue[300], borderRadius: BorderRadius.circular(15)),
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(15)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -134,34 +136,42 @@ class ArrayOfUtilities extends StatelessWidget {
         children: const [
           // Grid items
           Utilities(
+            navigatePath: "/home",
             label: "QR code",
             icon: Icon(Icons.qr_code_scanner),
           ),
           Utilities(
+            navigatePath: "/transaction",
             label: "Transfer",
             icon: Icon(Icons.compare_arrows_sharp),
           ),
           Utilities(
+            navigatePath: "/home",
             label: "Pay bill",
             icon: Icon(Icons.blinds_closed),
           ),
           Utilities(
+            navigatePath: "/home",
             label: "Gift",
             icon: Icon(Icons.card_giftcard),
           ),
           Utilities(
+            navigatePath: "/home",
             label: "Services",
             icon: Icon(Icons.account_balance_outlined),
           ),
           Utilities(
+            navigatePath: "/home",
             label: "Get Loan",
             icon: Icon(Icons.local_atm_rounded),
           ),
           Utilities(
+            navigatePath: "/home",
             label: "Saving",
             icon: Icon(Icons.savings_outlined),
           ),
           Utilities(
+            navigatePath: "/home",
             label: "More",
             icon: Icon(Icons.more_horiz),
           ),
@@ -174,12 +184,19 @@ class ArrayOfUtilities extends StatelessWidget {
 class Utilities extends StatelessWidget {
   final String label;
   final Widget icon;
-  const Utilities({super.key, required this.label, required this.icon});
+  final String navigatePath;
+  const Utilities(
+      {super.key,
+      required this.label,
+      required this.icon,
+      required this.navigatePath});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, navigatePath);
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

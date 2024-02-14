@@ -77,18 +77,36 @@ class _CredentialsState extends State<Credentials> {
           const SizedBox(
             height: 16,
           ),
-          ElevatedButton(
-              onPressed: () async {
-                Navigator.pushNamed(context, '/loading');
-                bool isPass = await verifyCredentials();
-                if (!context.mounted) return;
-                if (isPass == true) {
-                  Navigator.pushReplacementNamed(context, '/home');
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text("Login"))
+          SizedBox(
+            width: 100,
+            height: 50,
+            child: Material(
+              borderRadius: BorderRadius.circular(50),
+              color: Theme.of(context).colorScheme.secondary,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(50),
+                onTap: () async {
+                  Navigator.pushNamed(context, '/loading');
+                  bool isPass = await verifyCredentials();
+                  if (!context.mounted) return;
+                  if (isPass == true) {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Center(
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

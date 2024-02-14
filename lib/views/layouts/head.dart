@@ -9,9 +9,19 @@ class HeadLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
-        backgroundColor: Colors.blue[400],
-        leading: const Icon(Icons.account_balance),
+        title: Text(
+          title,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const IconTheme(
+              data: IconThemeData(color: Colors.white),
+              child: Icon(Icons.arrow_back)),
+        ),
       ),
       body: Center(child: view),
     );

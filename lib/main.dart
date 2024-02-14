@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'views/loading.dart';
 import 'views/login.dart';
+import 'views/transaction.dart';
 import 'views/layouts/main.dart';
 import 'views/layouts/head.dart';
 
@@ -21,11 +22,28 @@ Future<String> fetchData() async {
 void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
+    title: "ePay",
+    theme: ThemeData(
+        colorScheme: const ColorScheme(
+      brightness: Brightness.light,
+      primary: Colors.white,
+      secondary: Color.fromARGB(255, 84, 142, 239),
+      surface: Color.fromARGB(255, 149, 13, 227),
+      background: Colors.white,
+      error: Colors.red,
+      onPrimary: Colors.white,
+      onSecondary: Colors.black,
+      onSurface: Colors.black,
+      onBackground: Colors.black,
+      onError: Color.fromARGB(255, 184, 5, 5),
+    )),
     initialRoute: '/login',
     routes: {
       '/loading': (context) => const LoadingView(),
       '/login': (context) => const LoginView(),
       '/home': (context) => const MainLayout(),
+      '/transaction': (context) =>
+          const HeadLayout(title: "Transaction", view: Transaction()),
     },
   ));
 }
