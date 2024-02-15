@@ -21,7 +21,7 @@ class _LoginViewState extends State<LoginView> {
                   child: Align(
                     alignment: Alignment.center,
                     child: IconTheme(
-                        data: IconThemeData(size: 80, color: Colors.white),
+                        data: IconThemeData(size: 60, color: Colors.white),
                         child: Icon(Icons.account_balance_outlined)),
                   ),
                 ),
@@ -124,9 +124,18 @@ class Input extends StatelessWidget {
       decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-          filled: true,
-          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1, color: Theme.of(context).colorScheme.secondary)),
+          floatingLabelStyle:
+              TextStyle(color: Theme.of(context).colorScheme.secondary),
+          labelStyle: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Theme.of(context).colorScheme.secondary)),
           labelText: label),
     );
   }

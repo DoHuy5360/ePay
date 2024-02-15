@@ -10,18 +10,26 @@ class LoadingView extends StatefulWidget {
 class _LoadingViewState extends State<LoadingView> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.crisis_alert_outlined),
-              SizedBox(
+              IconTheme(
+                  data: IconThemeData(
+                      color: Theme.of(context).colorScheme.primary),
+                  child: const Icon(Icons.crisis_alert_outlined)),
+              const SizedBox(
                 width: 8,
               ),
-              Text("Loading...")
+              Text(
+                "Loading...",
+                style: TextStyle(
+                    fontSize: 20, color: Theme.of(context).colorScheme.primary),
+              )
             ],
           ),
         ),

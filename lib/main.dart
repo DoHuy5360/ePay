@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'views/loading.dart';
 import 'views/login.dart';
 import 'views/transaction.dart';
+import 'views/order.dart';
 import 'views/layouts/main.dart';
 import 'views/layouts/head.dart';
 
@@ -28,6 +29,7 @@ void main() async {
       brightness: Brightness.light,
       primary: Colors.white,
       secondary: Color.fromARGB(255, 84, 142, 239),
+      tertiary: Colors.black,
       surface: Color.fromARGB(255, 149, 13, 227),
       background: Colors.white,
       error: Colors.red,
@@ -37,13 +39,16 @@ void main() async {
       onBackground: Colors.black,
       onError: Color.fromARGB(255, 184, 5, 5),
     )),
-    initialRoute: '/login',
+    initialRoute: '/loading',
     routes: {
       '/loading': (context) => const LoadingView(),
       '/login': (context) => const LoginView(),
       '/home': (context) => const MainLayout(),
-      '/transaction': (context) =>
-          const HeadLayout(title: "Transaction", view: Transaction()),
+      '/transaction': (context) => const HeadLayout(
+            title: "Transaction",
+            view: Transaction(),
+          ),
+      '/order': (context) => const Order()
     },
   ));
 }

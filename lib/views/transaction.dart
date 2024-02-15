@@ -85,22 +85,25 @@ class TransactionState extends State<Transaction> {
           const SizedBox(
             height: 20,
           ),
-          InkWell(
-            onTap: () {},
-            child: SizedBox(
-                width: 400,
-                height: 50,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Center(
-                    child: Text(
-                      "Next",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
+          SizedBox(
+            width: 400,
+            height: 50,
+            child: Material(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.circular(10),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: () {
+                  Navigator.pushNamed(context, "/order");
+                },
+                child: const Center(
+                  child: Text(
+                    "Next",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
-                )),
+                ),
+              ),
+            ),
           )
         ],
       ),
