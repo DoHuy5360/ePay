@@ -16,9 +16,9 @@ class _MainLayoutState extends State<MainLayout> {
   int currentViewIndex = 0;
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Theme.of(context).colorScheme.secondary,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarColor: Theme.of(context).colorScheme.secondary,
+    // ));
     List<NavigateItem> bottomRoutes = [
       NavigateItem(
           icon: const Icon(Icons.home_outlined),

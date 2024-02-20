@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/login_transfer_data.dart';
 
 class Transaction extends StatefulWidget {
   const Transaction({super.key});
@@ -8,10 +9,10 @@ class Transaction extends StatefulWidget {
 }
 
 class TransactionState extends State<Transaction> {
-  String currency = "\$";
-  String balance = '1.00';
   @override
   Widget build(BuildContext context) {
+    final LoginTransferData data =
+        ModalRoute.of(context)!.settings.arguments as LoginTransferData;
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
@@ -19,7 +20,7 @@ class TransactionState extends State<Transaction> {
         children: [
           Column(
             children: [
-              Balance(currency: currency, balance: balance),
+              Balance(balance: data.balance),
               const SizedBox(
                 height: 20,
               ),
@@ -184,11 +185,9 @@ class Input extends StatelessWidget {
 class Balance extends StatelessWidget {
   const Balance({
     super.key,
-    required this.currency,
     required this.balance,
   });
 
-  final String currency;
   final String balance;
 
   @override
@@ -202,7 +201,7 @@ class Balance extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary, fontSize: 20),
         ),
         Text(
-          "$currency $balance",
+          balance,
           style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,

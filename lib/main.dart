@@ -6,6 +6,7 @@ import 'views/transaction.dart';
 import 'views/order.dart';
 import 'views/layouts/main.dart';
 import 'views/layouts/head.dart';
+import 'config.dart';
 
 Future<String> fetchData() async {
   var url = Uri.parse('https://jsonplaceholder.typicode.com/users');
@@ -21,6 +22,7 @@ Future<String> fetchData() async {
 }
 
 void main() async {
+  final Config config = Config();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: "ePay",
@@ -37,12 +39,14 @@ void main() async {
       onSecondary: Colors.black,
       onSurface: Colors.black,
       onBackground: Colors.black,
-      onError: Color.fromARGB(255, 184, 5, 5),
+      onError: Color.fromARGB(255, 144, 1, 58),
     )),
-    initialRoute: '/loading',
+    initialRoute: '/login',
     routes: {
       '/loading': (context) => const LoadingView(),
-      '/login': (context) => const LoginView(),
+      '/login': (context) => LoginView(
+            config: config,
+          ),
       '/home': (context) => const MainLayout(),
       '/transaction': (context) => const HeadLayout(
             title: "Transaction",
