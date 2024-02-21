@@ -9,4 +9,8 @@ class Request {
   static Future<Response> post(String uri, Object? body) async {
     return await http.post(Uri.parse(uri), body: body);
   }
+
+  static Future<Response> put(String uri, Object? body) async {
+    return await http.put(Uri.parse(uri), body: body);
+  }
 }

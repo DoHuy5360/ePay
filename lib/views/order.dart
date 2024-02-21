@@ -1,3 +1,5 @@
+import 'package:epay/models/login_transfer_data.dart';
+import 'package:epay/models/transaction_transfer_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +16,8 @@ class _OrderState extends State<Order> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Theme.of(context).colorScheme.secondary,
     ));
+    final TransactionTransferData data =
+        ModalRoute.of(context)!.settings.arguments as TransactionTransferData;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -57,7 +61,7 @@ class _OrderState extends State<Order> {
                       height: 10,
                     ),
                     Text(
-                      "1.00\$",
+                      data.balance,
                       style: TextStyle(
                           fontSize: 30,
                           color: Theme.of(context).colorScheme.secondary),
@@ -68,16 +72,16 @@ class _OrderState extends State<Order> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Section(
-                      label: "Beneficiary's name",
-                      value: "Do Huy",
+                    Section(
+                      label: "Beneficiary's\nname",
+                      value: data.name,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Section(
-                      label: "Beneficiary's account",
-                      value: "0963758993",
+                    Section(
+                      label: "Beneficiary's\naccount",
+                      value: "${data.id.substring(10)}...",
                     ),
                     const SizedBox(
                       height: 20,
@@ -91,7 +95,7 @@ class _OrderState extends State<Order> {
                     ),
                     const Section(
                       label: "Message",
-                      value: "Repay the loan",
+                      value: "None message",
                     ),
                   ],
                 ),

@@ -48,9 +48,11 @@ void main() async {
             config: config,
           ),
       '/home': (context) => const MainLayout(),
-      '/transaction': (context) => const HeadLayout(
+      '/transaction': (context) => HeadLayout(
             title: "Transaction",
-            view: Transaction(),
+            view: Transaction(
+              config: config,
+            ),
           ),
       '/order': (context) => const Order()
     },

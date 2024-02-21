@@ -6,6 +6,10 @@ class Api {
   String login() {
     return "$serverUrl/login";
   }
+
+  String updateTransaction() {
+    return "$serverUrl/transaction";
+  }
 }
 
 class Config {
