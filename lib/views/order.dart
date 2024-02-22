@@ -1,3 +1,4 @@
+import 'package:epay/config.dart';
 import 'package:epay/models/login_transfer_data.dart';
 import 'package:epay/models/transaction_transfer_data.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _OrderState extends State<Order> {
                       height: 10,
                     ),
                     Text(
-                      data.balance,
+                      detectCurrency(data.balance),
                       style: TextStyle(
                           fontSize: 30,
                           color: Theme.of(context).colorScheme.secondary),

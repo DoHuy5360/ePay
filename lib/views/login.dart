@@ -66,16 +66,9 @@ class _CredentialsState extends State<Credentials> {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
-      NumberFormat currencyFormat = NumberFormat.currency(
-        symbol: '\$', // Ký hiệu tiền tệ
-        decimalDigits: 2, // Số chữ số thập phân
-        locale: 'en_US', // Ngôn ngữ và định dạng quốc gia
-      );
 
-      String formattedPrice =
-          currencyFormat.format(double.parse(data["balance"]));
       return LoginTransferData(
-          name: data["name"], balance: formattedPrice, id: data["id"]);
+          name: data["name"], balance: data["balance"], id: data["id"]);
     } else {
       return null;
     }

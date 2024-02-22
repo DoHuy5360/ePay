@@ -4,7 +4,10 @@ import 'package:epay/config.dart';
 import 'package:epay/models/transaction_transfer_data.dart';
 import 'package:epay/utilities/request.dart';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import '../models/login_transfer_data.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Transaction extends StatefulWidget {
   final Config config;
@@ -181,13 +184,14 @@ class TransactionState extends State<Transaction> {
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
+                      TransactionTransferData? isPass =
+                          await _makeTransaction();
+                      if (!context.mounted) return;
+                      if (isPass != null) {
+                        Navigator.pushNamed(context, '/order',
+                            arguments: isPass);
+                      } else {}
                     }
-                    TransactionTransferData? isPass = await _makeTransaction();
-                    print(isPass);
-                    if (!context.mounted) return;
-                    if (isPass != null) {
-                      Navigator.pushNamed(context, '/order', arguments: isPass);
-                    } else {}
                   },
                   child: const Center(
                     child: Text(
@@ -300,7 +304,7 @@ class Balance extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary, fontSize: 20),
         ),
         Text(
-          balance,
+          detectCurrency(balance),
           style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,

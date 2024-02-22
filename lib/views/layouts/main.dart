@@ -1,7 +1,10 @@
+import 'package:epay/config.dart';
 import 'package:epay/views/home.dart';
 import 'package:epay/views/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -12,13 +15,13 @@ class MainLayout extends StatefulWidget {
 
 class _MainLayoutState extends State<MainLayout> {
   String title = "Home";
-  Widget currentView = const HomeView();
   int currentViewIndex = 0;
+  late WebSocketChannel channel;
+  Widget currentView = const HomeView();
+  String balance = "";
+
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   statusBarColor: Theme.of(context).colorScheme.secondary,
-    // ));
     List<NavigateItem> bottomRoutes = [
       NavigateItem(
           icon: const Icon(Icons.home_outlined),

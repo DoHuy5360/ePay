@@ -1,4 +1,7 @@
+import 'package:epay/config.dart';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import '../models/login_transfer_data.dart';
 import 'package:intl/intl.dart';
 
@@ -10,10 +13,30 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  late LoginTransferData data;
+  late WebSocketChannel channel;
+
+  @override
+  void initState() {
+    super.initState();
+    channel = IOWebSocketChannel.connect(detectSocketServer());
+    channel.stream.listen((message) {
+      setState(() {
+        data.balance = message as String;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    channel.sink.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final LoginTransferData data =
-        ModalRoute.of(context)!.settings.arguments as LoginTransferData;
+    data = ModalRoute.of(context)!.settings.arguments as LoginTransferData;
+
     return Column(
       children: [
         const HeadBar(),
@@ -67,13 +90,16 @@ class Balance extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(15)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.end,
+          spacing: 10,
+          runSpacing: 10,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +109,7 @@ class Balance extends StatelessWidget {
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 Text(
-                  data.balance,
+                  detectCurrency(data.balance),
                   style: const TextStyle(fontSize: 50, color: Colors.white),
                 ),
                 Text(
@@ -92,39 +118,35 @@ class Balance extends StatelessWidget {
                 )
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(7.5)),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.red[900]),
-                            child: const IconTheme(
-                                data: IconThemeData(color: Colors.yellow),
-                                child: Icon(Icons.star))),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text("VN"),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Icon(Icons.arrow_drop_down)
-                    ],
-                  ),
-                )
-              ],
+            IntrinsicWidth(
+              child: Container(
+                width: null,
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(7.5)),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.red[900]),
+                        child: const IconTheme(
+                            data: IconThemeData(color: Colors.yellow),
+                            child: Icon(Icons.star))),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text("VN"),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Icon(Icons.arrow_drop_down)
+                  ],
+                ),
+              ),
             )
           ],
         ),
