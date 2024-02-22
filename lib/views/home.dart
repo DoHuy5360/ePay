@@ -1,9 +1,8 @@
 import 'package:epay/config.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import '../models/login_transfer_data.dart';
 import 'package:intl/intl.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -14,24 +13,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late LoginTransferData data;
-  late WebSocketChannel channel;
-
-  @override
-  void initState() {
-    super.initState();
-    channel = IOWebSocketChannel.connect(detectSocketServer());
-    channel.stream.listen((message) {
-      setState(() {
-        data.balance = message as String;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    channel.sink.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +62,38 @@ class HeadBar extends StatelessWidget {
   }
 }
 
-class Balance extends StatelessWidget {
+class Balance extends StatefulWidget {
   final LoginTransferData data;
   const Balance({super.key, required this.data});
+
+  @override
+  State<Balance> createState() => _BalanceState();
+}
+
+class _BalanceState extends State<Balance> {
+  late LoginTransferData data = widget.data;
+  late IO.Socket socket;
+  @override
+  void initState() {
+    super.initState();
+    socket = IO.io(detectSocketServer(), <String, dynamic>{
+      'transports': ['websocket'],
+    });
+    socket.onConnect((_) {
+      socket.emit('homeConnecting', data.id);
+    });
+    socket.on('updateBalance', (newBalance) {
+      setState(() {
+        data.balance = "$newBalance";
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    socket.disconnect();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +123,7 @@ class Balance extends StatelessWidget {
                   style: const TextStyle(fontSize: 50, color: Colors.white),
                 ),
                 Text(
-                  data.id,
+                  widget.data.id,
                   style: const TextStyle(fontSize: 20, color: Colors.white),
                 )
               ],

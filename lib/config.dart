@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
@@ -25,21 +23,17 @@ class Config {
 
 Api detectApi() {
   if (kReleaseMode) {
-    // Môi trường sản xuất
     return Api(serverUrl: "https://epay-be-express.vercel.app");
   } else {
-    // Môi trường phát triển
     return Api(serverUrl: "http://192.168.1.9:5000");
   }
 }
 
 String detectSocketServer() {
   if (kReleaseMode) {
-    // Môi trường sản xuất
-    return "wss://epay-be-express.vercel.app";
+    return "https://epay-be-express.vercel.app";
   } else {
-    // Môi trường phát triển
-    return "ws://192.168.1.9:5000";
+    return "http://192.168.1.9:5000";
   }
 }
 

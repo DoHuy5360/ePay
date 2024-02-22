@@ -124,17 +124,17 @@ class _CredentialsState extends State<Credentials> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () async {
-                  Navigator.pushNamed(context, '/loading');
                   if (_formKey.currentState!.validate()) {
+                    Navigator.pushNamed(context, '/loading');
                     _formKey.currentState!.save();
-                  }
-                  LoginTransferData? isPass = await verifyCredentials();
-                  if (!context.mounted) return;
-                  if (isPass != null) {
-                    Navigator.pushReplacementNamed(context, '/home',
-                        arguments: isPass);
-                  } else {
-                    Navigator.of(context).pop();
+                    LoginTransferData? isPass = await verifyCredentials();
+                    if (!context.mounted) return;
+                    if (isPass != null) {
+                      Navigator.pushReplacementNamed(context, '/home',
+                          arguments: isPass);
+                    } else {
+                      Navigator.of(context).pop();
+                    }
                   }
                 },
                 child: Center(
