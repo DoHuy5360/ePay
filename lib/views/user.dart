@@ -10,6 +10,6 @@ class UserView extends StatefulWidget {
 class _UserViewState extends State<UserView> {
   @override
   Widget build(BuildContext context) {
-    return Text('User');
+    return const Text('User');
   }
 }

@@ -1,7 +1,11 @@
 class TransactionTransferData {
   final String name;
-  final String balance;
+  final String fluctuation;
+  final String newBalance;
   final String id;
   TransactionTransferData(
-      {required this.name, required this.balance, required this.id});
+      {required this.name,
+      required this.newBalance,
+      required this.id,
+      required this.fluctuation});
 }

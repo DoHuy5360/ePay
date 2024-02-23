@@ -1,8 +1,8 @@
 import 'package:epay/config.dart';
+import 'package:epay/contexts/balance_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/login_transfer_data.dart';
-import 'package:intl/intl.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -72,26 +72,14 @@ class Balance extends StatefulWidget {
 
 class _BalanceState extends State<Balance> {
   late LoginTransferData data = widget.data;
-  late IO.Socket socket;
+
   @override
   void initState() {
     super.initState();
-    socket = IO.io(detectSocketServer(), <String, dynamic>{
-      'transports': ['websocket'],
-    });
-    socket.onConnect((_) {
-      socket.emit('homeConnecting', data.id);
-    });
-    socket.on('updateBalance', (newBalance) {
-      setState(() {
-        data.balance = "$newBalance";
-      });
-    });
   }
 
   @override
   void dispose() {
-    socket.disconnect();
     super.dispose();
   }
 
@@ -119,7 +107,7 @@ class _BalanceState extends State<Balance> {
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 Text(
-                  detectCurrency(data.balance),
+                  detectCurrency(context.watch<BalanceProvider>().balance),
                   style: const TextStyle(fontSize: 50, color: Colors.white),
                 ),
                 Text(

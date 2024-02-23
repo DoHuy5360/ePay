@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:epay/config.dart';
+import 'package:epay/contexts/balance_provider.dart';
 import 'package:epay/models/transaction_transfer_data.dart';
 import 'package:epay/utilities/request.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/login_transfer_data.dart';
 
 class Transaction extends StatefulWidget {
@@ -32,7 +34,10 @@ class TransactionState extends State<Transaction> {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       return TransactionTransferData(
-          name: data["name"], balance: fluctuation, id: accountNumber);
+          name: data["name"],
+          newBalance: "${data["newBalance"]}",
+          fluctuation: fluctuation,
+          id: accountNumber);
     } else {
       return null;
     }
@@ -185,6 +190,9 @@ class TransactionState extends State<Transaction> {
                           await _makeTransaction();
                       if (!context.mounted) return;
                       if (isPass != null) {
+                        context
+                            .read<BalanceProvider>()
+                            .updateBalance(isPass.newBalance);
                         Navigator.pushNamed(context, '/order',
                             arguments: isPass);
                       } else {}
@@ -301,7 +309,7 @@ class Balance extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary, fontSize: 20),
         ),
         Text(
-          detectCurrency(balance),
+          detectCurrency(context.watch<BalanceProvider>().balance),
           style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,

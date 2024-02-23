@@ -1,3 +1,4 @@
+import 'package:epay/contexts/balance_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'views/loading.dart';
@@ -7,6 +8,7 @@ import 'views/order.dart';
 import 'views/layouts/main.dart';
 import 'views/layouts/head.dart';
 import 'config.dart';
+import 'package:provider/provider.dart';
 
 Future<String> fetchData() async {
   var url = Uri.parse('https://jsonplaceholder.typicode.com/users');
@@ -23,38 +25,40 @@ Future<String> fetchData() async {
 
 void main() async {
   final Config config = Config();
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: "ePay",
-    theme: ThemeData(
-        colorScheme: const ColorScheme(
-      brightness: Brightness.light,
-      primary: Colors.white,
-      secondary: Color.fromARGB(255, 84, 142, 239),
-      tertiary: Colors.black,
-      surface: Color.fromARGB(255, 149, 13, 227),
-      background: Colors.white,
-      error: Colors.red,
-      onPrimary: Colors.white,
-      onSecondary: Colors.black,
-      onSurface: Colors.black,
-      onBackground: Colors.black,
-      onError: Color.fromARGB(255, 144, 1, 58),
-    )),
-    initialRoute: '/login',
-    routes: {
-      '/loading': (context) => const LoadingView(),
-      '/login': (context) => LoginView(
-            config: config,
-          ),
-      '/home': (context) => const MainLayout(),
-      '/transaction': (context) => HeadLayout(
-            title: "Transaction",
-            view: Transaction(
-              config: config,
-            ),
-          ),
-      '/order': (context) => const Order()
-    },
-  ));
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => BalanceProvider())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "ePay",
+        theme: ThemeData(
+            colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Colors.white,
+          secondary: Color.fromARGB(255, 84, 142, 239),
+          tertiary: Colors.black,
+          surface: Color.fromARGB(255, 149, 13, 227),
+          background: Colors.white,
+          error: Colors.red,
+          onPrimary: Colors.white,
+          onSecondary: Colors.black,
+          onSurface: Colors.black,
+          onBackground: Colors.black,
+          onError: Color.fromARGB(255, 144, 1, 58),
+        )),
+        initialRoute: '/login',
+        routes: {
+          '/loading': (context) => const LoadingView(),
+          '/login': (context) => LoginView(
+                config: config,
+              ),
+          '/home': (context) => const MainLayout(),
+          '/transaction': (context) => HeadLayout(
+                title: "Transaction",
+                view: Transaction(
+                  config: config,
+                ),
+              ),
+          '/order': (context) => const Order()
+        },
+      )));
 }

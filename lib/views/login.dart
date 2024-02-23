@@ -1,8 +1,8 @@
+import 'package:epay/contexts/balance_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import '../models/login_transfer_data.dart';
-import 'package:intl/intl.dart';
 import '../config.dart';
 import '../utilities/request.dart';
 import 'package:flutter/services.dart';
@@ -130,6 +130,9 @@ class _CredentialsState extends State<Credentials> {
                     LoginTransferData? isPass = await verifyCredentials();
                     if (!context.mounted) return;
                     if (isPass != null) {
+                      context
+                          .read<BalanceProvider>()
+                          .updateBalance(isPass.balance);
                       Navigator.pushReplacementNamed(context, '/home',
                           arguments: isPass);
                     } else {

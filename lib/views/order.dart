@@ -62,7 +62,7 @@ class _OrderState extends State<Order> {
                       height: 10,
                     ),
                     Text(
-                      detectCurrency(data.balance),
+                      detectCurrency(data.fluctuation),
                       style: TextStyle(
                           fontSize: 30,
                           color: Theme.of(context).colorScheme.secondary),
